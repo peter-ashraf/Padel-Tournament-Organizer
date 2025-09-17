@@ -1,0 +1,21 @@
+{
+  "name": "Padel Tournament Organizer",
+  "short_name": "Padel Tournament",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fcfcf9",
+  "theme_color": "#218096",
+  "icons": [
+    {
+      "src": "padel-icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "padel-icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
