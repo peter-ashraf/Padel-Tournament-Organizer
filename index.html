@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Enhanced Padel Tournament Organizer - Progressive Web App">
+    <title>Padel Tournament Organizer</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#218096">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Padel Tournament">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiUGFkZWwgVG91cm5hbWVudCBPcmdhbml6ZXIiLCJzaG9ydF9uYW1lIjoiUGFkZWwgVG91cm5hbWVudCIsInN0YXJ0X3VybCI6Ii8iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjZmNmY2Y5IiwidGhlbWVfY29sb3IiOiIjMjE4MDk2IiwiaWNvbnMiOlt7InNyYyI6ImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNUVE9IiwidHlwZSI6ImltYWdlL3N2Zyt4bWwiLCJzaXplcyI6IjE5Mng5NiJ9XX0=">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Predefined Names Datalist -->
+    <datalist id="player-names">
+        <option value="Peter"></option>
+        <option value="Mostafa"></option>
+        <option value="Michael"></option>
+        <option value="Kirollos"></option>
+        <option value="Arsy"></option>
+        <option value="Max"></option>
+    </datalist>
+
+    <div class="container">
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="screen active">
+            <div class="welcome-header">
+                <h1>🏓 Padel Tournament Organizer</h1>
+                <p class="subtitle">Professional tournament management with correct rotation</p>
+            </div>
+            
+            <div class="card">
+                <div class="card__body">
+                    <div class="tournament-setup">
+                        <div class="form-group">
+                            <label class="form-label" for="player-count">Number of Players (4-20)</label>
+                            <input type="number" id="player-count" class="form-control" min="4" max="20" value="5" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="court-count">Number of Courts (1-4)</label>
+                            <input type="number" id="court-count" class="form-control" min="1" max="4" value="1" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="match-format">Match Format</label>
+                            <select id="match-format" class="form-control">
+                                <option value="best_of_3">Best of 3 - First to win 2 games</option>
+                                <option value="best_of_5">Best of 5 - First to win 3 games</option>
+                                <option value="full_set">Full Set - Official padel set (first to 6 games)</option>
+                            </select>
+                        </div>
+                        
+                        <button id="setup-players-btn" class="btn btn--primary btn--full-width">Setup Players</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Player Names Screen -->
+        <div id="names-screen" class="screen">
+            <div class="screen-header">
+                <h2>Enter Player Names</h2>
+                <p id="names-subtitle">Enter names for all players</p>
+            </div>
+            
+            <div class="card">
+                <div class="card__body">
+                    <div class="quick-actions">
+                        <button id="quick-fill-btn" class="btn btn--secondary">Quick Fill with Sample Names</button>
+                    </div>
+                    
+                    <form id="names-form">
+                        <div id="name-inputs">
+                            <!-- Name inputs will be generated dynamically -->
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" id="back-to-welcome" class="btn btn--outline">Back</button>
+                            <button type="submit" class="btn btn--primary">Start Tournament</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tournament Screen -->
+        <div id="tournament-screen" class="screen">
+            <div class="tournament-header">
+                <div class="tournament-title">
+                    <h2>Tournament in Progress</h2>
+                    <div class="tournament-meta">
+                        <span id="current-round" class="status status--info">Round 1</span>
+                        <span id="match-format-display" class="status status--success">Best of 3</span>
+                    </div>
+                </div>
+                <div class="tournament-actions-header">
+                    <button id="finish-tournament" class="btn btn--primary">Finish Tournament</button>
+                    <button id="reset-tournament" class="btn btn--outline btn--sm">Reset</button>
+                </div>
+            </div>
+
+            <!-- Waiting Players Section -->
+            <div id="waiting-section" class="section">
+                <h3>Waiting Players</h3>
+                <div id="waiting-players" class="waiting-players">
+                    <!-- Waiting players will be displayed here -->
+                </div>
+            </div>
+
+            <!-- Current Matches -->
+            <div class="section">
+                <h3>Current Matches</h3>
+                <div id="current-matches" class="matches-container">
+                    <!-- Current matches will be generated dynamically -->
+                </div>
+                <div class="round-actions">
+                    <button id="next-round-btn" class="btn btn--primary btn--full-width">Next Round</button>
+                </div>
+            </div>
+
+            <!-- Match History -->
+            <div class="section">
+                <h3>Match History</h3>
+                <div id="match-history" class="match-history">
+                    <p class="empty-state">No completed matches yet</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tournament Statistics Screen -->
+        <div id="statistics-screen" class="screen">
+            <div class="stats-header">
+                <h2>Tournament Statistics</h2>
+                <p class="stats-subtitle">Complete tournament analysis</p>
+            </div>
+            
+            <div class="stats-container">
+                <div class="stats-section">
+                    <h3>Best Performing Pair</h3>
+                    <div id="best-pair-stats" class="stat-card stat-card--success">
+                        <!-- Best pair stats -->
+                    </div>
+                </div>
+                
+                <div class="stats-section">
+                    <h3>Individual Performance Leaders</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h4>Most Wins</h4>
+                            <div id="most-wins-stats"></div>
+                        </div>
+                        <div class="stat-card">
+                            <h4>Most Losses</h4>
+                            <div id="most-losses-stats"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-section">
+                    <h3>Worst Performing Pair</h3>
+                    <div id="worst-pair-stats" class="stat-card stat-card--error">
+                        <!-- Worst pair stats -->
+                    </div>
+                </div>
+                
+                <div class="stats-section">
+                    <h3>Individual Player Statistics</h3>
+                    <div id="individual-stats" class="individual-stats">
+                        <!-- Individual player statistics -->
+                    </div>
+                </div>
+                
+                <div class="stats-actions">
+                    <button id="export-results" class="btn btn--secondary">Export Results</button>
+                    <button id="reset-from-stats" class="btn btn--outline">Reset Tournament</button>
+                    <button id="new-tournament" class="btn btn--primary">New Tournament</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Match Score Modal -->
+        <div id="match-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="match-title">Record Match Score</h3>
+                    <button id="close-match-modal" class="btn-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="match-format-indicator">
+                        <span id="modal-match-format">Best of 3</span>
+                    </div>
+                    <div class="match-score-form">
+                        <div class="team-score">
+                            <h4 id="team1-name">Team 1</h4>
+                            <div class="team-players" id="team1-players">Player 1 + Player 2</div>
+                            <input type="number" id="team1-score" class="form-control score-input" min="0" value="0">
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team-score">
+                            <h4 id="team2-name">Team 2</h4>
+                            <div class="team-players" id="team2-players">Player 3 + Player 4</div>
+                            <input type="number" id="team2-score" class="form-control score-input" min="0" value="0">
+                        </div>
+                    </div>
+                    <div class="modal-actions">
+                        <button id="save-score" class="btn btn--primary btn--full-width">Save Score</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+            <span class="theme-icon">🌓</span>
+        </button>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
