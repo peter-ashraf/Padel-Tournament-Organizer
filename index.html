@@ -3,20 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Enhanced Padel Tournament Organizer - Progressive Web App">
+    <meta name="description" content="Enhanced Padel Tournament Organizer - Progressive Web App with Fixed Icons">
     <title>Padel Tournament Organizer</title>
     
-    <!-- Browser Tab Icon (Favicon) -->
-    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgZmlsbD0ibm9uZSI+CiAgPHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHJ4PSIxMDAiIGZpbGw9IiMyZWNjNzEiLz4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMjgsMTI4KSI+CiAgICA8IS0tIFBhZGVsIFJhY2tldCAxIC0tPgogICAgPGVsbGlwc2UgY3g9IjEyOCIgY3k9IjY0IiByeD0iNjAiIHJ5PSI4MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjgiLz4KICAgIDxyZWN0IHg9IjEyMCIgeT0iMTQ0IiB3aWR0aD0iMTYiIGhlaWdodD0iODAiIGZpbGw9IiNmZmZmZmYiLz4KCiAgICA8IS0tIFBhZGVsIFJhY2tldCAyIChjcm9zc2VkKSAtLT4KICAgIDxlbGxpcHNlIGN4PSIxMjgiIGN5PSIxOTIiIHJ4PSI2MCIgcnk9IjgwIiBmaWxsPSJub25lIiBzdHJva2U9IiMzNDk4ZGIiIHN0cm9rZS13aWR0aD0iOCIgdHJhbnNmb3JtPSJyb3RhdGUoNDUgMTI4IDEyOCkiLz4KICAgIDxyZWN0IHg9IjEyMCIgeT0iMzIiIHdpZHRoPSIxNiIgaGVpZ2h0PSI4MCIgZmlsbD0iIzM0OThkYiIgdHJhbnNmb3JtPSJyb3RhdGUoNDUgMTI4IDEyOCkiLz4KCiAgICA8IS0tIEJhbGwgLS0+CiAgICA8Y2lyY2xlIGN4PSIxMjgiIGN5PSIxMjgiIHI9IjE2IiBmaWxsPSIjZjM5YzEyIi8+CiAgICA8cGF0aCBkPSJNMTIwIDEyOCBRMTI4IDEyMCAxMzYgMTI4IFExMjggMTM2IDEyMCAxMjgiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+CiAgPC9nPgo8L3N2Zz4=">
+    <!-- Fixed Icons for PWA -->
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjgiIGhlaWdodD0iMTI4IiB2aWV3Qm94PSIwIDAgMTI4IDEyOCI+PGNpcmNsZSBjeD0iNjQiIGN5PSI2NCIgcj0iNjQiIGZpbGw9IiMyZWNjNzEiLz48cGF0aCBkPSJNNDAgNDBMODggNDBBOCA4IDAgMCAwIDk2IDQ4TDk2IDgwQTggOCAwIDAgMCA4OCA4OEw0MCA4OEE4IDggMCAwIDAgMzIgODBMMzIgNDhBOCA4IDAgMCAwIDQwIDQwWiIgZmlsbD0id2hpdGUiLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjU2IiByPSIzIiBmaWxsPSIjMmVjYzcxIi8+PGNpcmNsZSBjeD0iNzgiIGN5PSI1NiIgcj0iMyIgZmlsbD0iIzJlY2M3MSIvPjxjaXJjbGUgY3g9IjY0IiBjeD0iNzIiIHI9IjMiIGZpbGw9IiNmMzljMTIiLz48L3N2Zz4=">
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgMTgwIDE4MCI+PHJlY3Qgd2lkdGg9IjE4MCIgaGVpZ2h0PSIxODAiIHJ4PSIzNiIgZmlsbD0iIzIxODA5NiIvPjxwYXRoIGQ9Ik02MCA2MEwxMjAgNjBBMTIgMTIgMCAwIDAgMTMyIDcyTDEzMiAxMDhBMTIgMTIgMCAwIDAgMTIwIDEyMEw2MCAxMjBBMTIgMTIgMCAwIDAgNDggMTA4TDQ4IDcyQTEyIDEyIDAgMCAwIDYwIDYwWiIgZmlsbD0id2hpdGUiLz48cGF0aCBkPSJNNzIgNzZMMTA4IDc2IiBzdHJva2U9IiMyMTgwOTYiIHN0cm9rZS13aWR0aD0iMiIvPjxjaXJjbGUgY3g9Ijc0IiBjeT0iODQiIHI9IjMiIGZpbGw9IiMyMTgwOTYiLz48Y2lyY2xlIGN4PSIxMDYiIGN5PSI4NCIgcj0iMyIgZmlsbD0iIzIxODA5NiIvPjxjaXJjbGUgY3g9IjkwIiBjeT0iOTYiIHI9IjQiIGZpbGw9IiNmMzljMTIiLz48L3N2Zz4=">
     
     <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#218096">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Padel Tournament">
+    <meta name="mobile-web-app-capable" content="yes">
     
-    <!-- PWA Manifest with Custom Padel Icon -->
-    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiUGFkZWwgVG91cm5hbWVudCBPcmdhbml6ZXIiLCJzaG9ydF9uYW1lIjoiUGFkZWwgVG91cm5hbWVudCIsInN0YXJ0X3VybCI6Ii8iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjZmNmY2Y5IiwidGhlbWVfY29sb3IiOiIjMjE4MDk2IiwiaWNvbnMiOlt7InNyYyI6ImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNRUE9IiwidHlwZSI6ImltYWdlL3N2Zyt4bWwiLCJzaXplcyI6IjUxMng1MTIgMTkyeDE5MiIsInB1cnBvc2UiOiJhbnkgbWFza2FibGUifV19">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiUGFkZWwgVG91cm5hbWVudCBPcmdhbml6ZXIiLCJzaG9ydF9uYW1lIjoiUGFkZWwgVG91cm5hbWVudCIsInN0YXJ0X3VybCI6Ii8iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjZmNmY2Y5IiwidGhlbWVfY29sb3IiOiIjMjE4MDk2IiwiaWNvbnMiOlt7InNyYyI6ImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNRUE9Iiwic2l6ZXMiOiIxOTJ4MTkyIDUxMng1MTIiLCJ0eXBlIjoiaW1hZ2Uvc3ZnK3htbCIsInB1cnBvc2UiOiJhbnkgbWFza2FibGUifV19">
     
     <style>
         :root {
@@ -331,19 +335,17 @@
             text-align: center;
         }
 
-        /* FIXED: Match History Scrolling - Show ALL matches */
         .match-history {
-            max-height: none; /* REMOVED height limit */
-            min-height: 200px; /* Minimum height for better UX */
-            overflow-y: auto; /* Enable scrolling when needed */
-            padding-right: 10px; /* Account for scrollbar */
+            max-height: none;
+            min-height: 200px;
+            overflow-y: auto;
+            padding-right: 10px;
             border: 1px solid var(--border-color);
             border-radius: var(--radius);
             background: var(--surface-color);
-            -webkit-overflow-scrolling: touch; /* Smooth mobile scrolling */
+            -webkit-overflow-scrolling: touch;
         }
 
-        /* Custom scrollbar styling */
         .match-history::-webkit-scrollbar {
             width: 8px;
         }
@@ -648,13 +650,12 @@
             }
             
             .match-history {
-                min-height: 150px; /* Smaller on mobile */
+                min-height: 150px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Predefined Names Datalist -->
     <datalist id="player-names">
         <option value="Peter"></option>
         <option value="Mostafa"></option>
@@ -665,7 +666,6 @@
     </datalist>
 
     <div class="container">
-        <!-- Welcome Screen -->
         <div id="welcome-screen" class="screen active">
             <div class="welcome-header">
                 <h1>🏸 Padel Tournament Organizer</h1>
@@ -700,7 +700,6 @@
             </div>
         </div>
 
-        <!-- Player Names Screen -->
         <div id="names-screen" class="screen">
             <div class="screen-header">
                 <h2>Enter Player Names</h2>
@@ -715,7 +714,6 @@
                     
                     <form id="names-form">
                         <div id="name-inputs">
-                            <!-- Name inputs will be generated dynamically -->
                         </div>
                         <div class="form-actions">
                             <button type="button" id="back-to-welcome" class="btn btn--outline">Back</button>
@@ -726,7 +724,6 @@
             </div>
         </div>
 
-        <!-- Tournament Screen -->
         <div id="tournament-screen" class="screen">
             <div class="tournament-header">
                 <div class="tournament-title">
@@ -742,26 +739,21 @@
                 </div>
             </div>
 
-            <!-- Waiting Players Section -->
             <div id="waiting-section" class="section">
                 <h3>Waiting Players</h3>
                 <div id="waiting-players" class="waiting-players">
-                    <!-- Waiting players will be displayed here -->
                 </div>
             </div>
 
-            <!-- Current Matches -->
             <div class="section">
                 <h3>Current Matches</h3>
                 <div id="current-matches" class="matches-container">
-                    <!-- Current matches will be generated dynamically -->
                 </div>
                 <div class="round-actions">
                     <button id="next-round-btn" class="btn btn--primary btn--full-width">Next Round</button>
                 </div>
             </div>
 
-            <!-- Match History -->
             <div class="section">
                 <h3>Match History</h3>
                 <div id="match-history" class="match-history">
@@ -770,7 +762,6 @@
             </div>
         </div>
 
-        <!-- Tournament Statistics Screen -->
         <div id="statistics-screen" class="screen">
             <div class="stats-header">
                 <h2>Tournament Statistics</h2>
@@ -781,7 +772,6 @@
                 <div class="stats-section">
                     <h3>Best Performing Pair</h3>
                     <div id="best-pair-stats" class="stat-card stat-card--success">
-                        <!-- Best pair stats -->
                     </div>
                 </div>
                 
@@ -802,26 +792,22 @@
                 <div class="stats-section">
                     <h3>Worst Performing Pair</h3>
                     <div id="worst-pair-stats" class="stat-card stat-card--error">
-                        <!-- Worst pair stats -->
                     </div>
                 </div>
                 
                 <div class="stats-section">
                     <h3>Individual Player Statistics</h3>
                     <div id="individual-stats" class="individual-stats">
-                        <!-- Individual player statistics -->
                     </div>
                 </div>
                 
                 <div class="stats-actions">
-                    <button id="export-results" class="btn btn--secondary">📊 Export Spreadsheet</button>
                     <button id="reset-from-stats" class="btn btn--outline">Reset Tournament</button>
                     <button id="new-tournament" class="btn btn--primary">New Tournament</button>
                 </div>
             </div>
         </div>
 
-        <!-- Match Score Modal -->
         <div id="match-modal" class="modal">
             <div class="modal-content">
                 <div class="modal-header">
@@ -837,7 +823,6 @@
                             <h4 id="team1-name">Team 1</h4>
                             <div class="team-players" id="team1-players">Player 1 + Player 2</div>
                             <select id="team1-score" class="form-control score-input">
-                                <!-- Options will be populated dynamically -->
                             </select>
                         </div>
                         <div class="vs-divider">VS</div>
@@ -845,12 +830,10 @@
                             <h4 id="team2-name">Team 2</h4>
                             <div class="team-players" id="team2-players">Player 3 + Player 4</div>
                             <select id="team2-score" class="form-control score-input">
-                                <!-- Options will be populated dynamically -->
                             </select>
                         </div>
                     </div>
                     
-                    <!-- Tiebreak Input (shows when needed) -->
                     <div id="tiebreak-section" class="tiebreak-input" style="display: none;">
                         <h5>Tiebreak Score (6-6)</h5>
                         <div class="tiebreak-scores">
@@ -867,7 +850,6 @@
             </div>
         </div>
 
-        <!-- Theme Toggle -->
         <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
             <span class="theme-icon">🌓</span>
         </button>
@@ -877,7 +859,7 @@
         class PadelTournament {
             constructor() {
                 this.players = [];
-                this.allPlayers = []; // Track all players for rotation
+                this.allPlayers = [];
                 this.playerCount = 5;
                 this.courtCount = 1;
                 this.matchFormat = 'best_of_3';
@@ -906,14 +888,13 @@
                 this.startAutoSave();
             }
 
-            // ENHANCED DATA PERSISTENCE - Multiple storage methods
             async initIndexedDB() {
                 return new Promise((resolve, reject) => {
                     const request = indexedDB.open(this.dbName, this.dbVersion);
                     
                     request.onerror = () => {
                         console.log('IndexedDB failed to open');
-                        resolve(); // Don't fail, just continue without IndexedDB
+                        resolve();
                     };
                     
                     request.onsuccess = (event) => {
@@ -962,7 +943,6 @@
                 }
             }
 
-            // ENHANCED SAVE - Multiple methods WITHOUT annoying indicator
             saveToStorage() {
                 const data = {
                     players: this.players,
@@ -980,41 +960,31 @@
                 };
 
                 try {
-                    // Method 1: localStorage (primary)
                     localStorage.setItem('padelTournament', JSON.stringify(data));
-                    
-                    // Method 2: sessionStorage (backup)
                     sessionStorage.setItem('padelTournamentBackup', JSON.stringify(data));
-                    
-                    // Method 3: IndexedDB (persistent across browser clears)
                     this.saveToIndexedDB(data);
-                    
                 } catch (error) {
                     console.error('Failed to save tournament data:', error);
                 }
             }
 
-            // Auto-save every 5 seconds during active tournament - SILENTLY
             startAutoSave() {
                 setInterval(() => {
                     if (this.tournamentActive) {
-                        this.saveToStorage(); // Saves silently without any indicator
+                        this.saveToStorage();
                     }
                 }, 5000);
             }
 
-            // ENHANCED LOAD - Try multiple storage methods
             async loadFromStorage() {
                 let data = null;
                 
                 try {
-                    // Method 1: Try localStorage first
                     const localData = localStorage.getItem('padelTournament');
                     if (localData) {
                         data = JSON.parse(localData);
                     }
                     
-                    // Method 2: Try sessionStorage as backup
                     if (!data) {
                         const sessionData = sessionStorage.getItem('padelTournamentBackup');
                         if (sessionData) {
@@ -1022,13 +992,11 @@
                         }
                     }
                     
-                    // Method 3: Try IndexedDB as last resort
                     if (!data) {
                         data = await this.loadFromIndexedDB();
                     }
                     
                     if (data) {
-                        // Restore tournament state
                         Object.assign(this, data);
                         
                         if (this.tournamentActive) {
@@ -1041,7 +1009,6 @@
                     console.error('Failed to load tournament data:', error);
                 }
 
-                // Load theme
                 const savedTheme = localStorage.getItem('theme');
                 if (savedTheme) {
                     document.documentElement.setAttribute('data-color-scheme', savedTheme);
@@ -1059,7 +1026,7 @@
             registerServiceWorker() {
                 if ('serviceWorker' in navigator) {
                     const swCode = `
-                        const CACHE_NAME = 'padel-tournament-v2';
+                        const CACHE_NAME = 'padel-tournament-v3';
                         const urlsToCache = ['/'];
 
                         self.addEventListener('install', event => {
@@ -1084,7 +1051,6 @@
                 }
             }
 
-            // Fisher-Yates shuffle for fair player randomization
             shuffleArray(array) {
                 const shuffled = [...array];
                 for (let i = shuffled.length - 1; i > 0; i--) {
@@ -1095,7 +1061,6 @@
             }
 
             bindEvents() {
-                // Welcome screen events
                 document.getElementById('player-count').addEventListener('change', (e) => {
                     this.playerCount = parseInt(e.target.value);
                 });
@@ -1112,7 +1077,6 @@
                     this.setupNamesScreen();
                 });
 
-                // Names screen events
                 document.getElementById('quick-fill-btn').addEventListener('click', () => {
                     this.quickFillNames();
                 });
@@ -1126,7 +1090,6 @@
                     this.startTournament();
                 });
 
-                // Tournament screen events
                 document.getElementById('finish-tournament').addEventListener('click', () => {
                     this.finishTournament();
                 });
@@ -1141,7 +1104,6 @@
                     this.nextRound();
                 });
 
-                // Statistics screen events
                 document.getElementById('new-tournament').addEventListener('click', () => {
                     this.resetTournament();
                 });
@@ -1152,12 +1114,6 @@
                     }
                 });
 
-                // EXCEL EXPORT EVENT
-                document.getElementById('export-results').addEventListener('click', () => {
-                    this.exportToExcel();
-                });
-
-                // Modal events
                 document.getElementById('close-match-modal').addEventListener('click', () => {
                     this.closeModal();
                 });
@@ -1166,7 +1122,6 @@
                     this.saveMatchScore();
                 });
 
-                // Score input events for tiebreak detection
                 document.getElementById('team1-score').addEventListener('change', () => {
                     this.checkForTiebreak();
                 });
@@ -1175,111 +1130,15 @@
                     this.checkForTiebreak();
                 });
 
-                // Theme toggle
                 document.getElementById('theme-toggle').addEventListener('click', () => {
                     this.toggleTheme();
                 });
 
-                // Close modal when clicking outside
                 document.getElementById('match-modal').addEventListener('click', (e) => {
                     if (e.target === e.currentTarget) {
                         this.closeModal();
                     }
                 });
-            }
-
-            // EXCEL/CSV EXPORT FUNCTION
-            exportToExcel() {
-                try {
-                    // Create comprehensive CSV data
-                    let csvContent = "data:text/csv;charset=utf-8,";
-                    
-                    // Tournament Info
-                    csvContent += "PADEL TOURNAMENT RESULTS\n";
-                    csvContent += `Date: ${new Date().toLocaleDateString()}\n`;
-                    csvContent += `Format: ${this.getFormatDisplayName()}\n`;
-                    csvContent += `Total Rounds: ${this.currentRound - 1}\n`;
-                    csvContent += `Players: ${this.allPlayers.length}\n`;
-                    csvContent += `Courts: ${this.courtCount}\n\n`;
-                    
-                    // Match History
-                    csvContent += "MATCH HISTORY\n";
-                    csvContent += "Round,Team 1,Team 2,Winner,Score\n";
-                    
-                    this.matchHistory.forEach(match => {
-                        const scoreText = this.formatPadelScoreForCSV(match.score);
-                        csvContent += `${match.round},"${match.team1.join(' & ')}","${match.team2.join(' & ')}","${match.winner.join(' & ')}","${scoreText}"\n`;
-                    });
-                    
-                    csvContent += "\n";
-                    
-                    // Player Statistics
-                    csvContent += "PLAYER STATISTICS\n";
-                    csvContent += "Player,Matches,Wins,Losses,Win Rate %,Times Played,Times Rested\n";
-                    
-                    Object.entries(this.playerStats).forEach(([name, stats]) => {
-                        const winRate = stats.matches > 0 ? Math.round(stats.wins / stats.matches * 100) : 0;
-                        csvContent += `${name},${stats.matches},${stats.wins},${stats.losses},${winRate}%,${stats.matchesPlayed || 0},${stats.matchesRested || 0}\n`;
-                    });
-                    
-                    csvContent += "\n";
-                    
-                    // Pair Statistics
-                    const pairStats = {};
-                    this.matchHistory.forEach(match => {
-                        const team1Key = match.team1.sort().join(' & ');
-                        const team2Key = match.team2.sort().join(' & ');
-                        
-                        if (!pairStats[team1Key]) pairStats[team1Key] = { wins: 0, losses: 0 };
-                        if (!pairStats[team2Key]) pairStats[team2Key] = { wins: 0, losses: 0 };
-                        
-                        const winnerKey = match.winner.sort().join(' & ');
-                        const loserKey = winnerKey === team1Key ? team2Key : team1Key;
-                        
-                        pairStats[winnerKey].wins++;
-                        pairStats[loserKey].losses++;
-                    });
-                    
-                    csvContent += "PAIR STATISTICS\n";
-                    csvContent += "Pair,Wins,Losses,Total Matches,Win Rate %\n";
-                    
-                    Object.entries(pairStats).forEach(([pair, stats]) => {
-                        const total = stats.wins + stats.losses;
-                        const winRate = total > 0 ? Math.round(stats.wins / total * 100) : 0;
-                        csvContent += `"${pair}",${stats.wins},${stats.losses},${total},${winRate}%\n`;
-                    });
-                    
-                    // Create and download file
-                    const encodedUri = encodeURI(csvContent);
-                    const link = document.createElement("a");
-                    link.setAttribute("href", encodedUri);
-                    link.setAttribute("download", `padel_tournament_${new Date().toISOString().split('T')[0]}.csv`);
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                    
-                } catch (error) {
-                    alert('Export failed. Please try again.');
-                    console.error('Export error:', error);
-                }
-            }
-
-            // Helper function to format padel score for CSV (plain text)
-            formatPadelScoreForCSV(score) {
-                if (!score) return '';
-                
-                if (score.tiebreak) {
-                    const team1Tiebreak = score.tiebreak.team1;
-                    const team2Tiebreak = score.tiebreak.team2;
-                    
-                    if (team1Tiebreak > team2Tiebreak) {
-                        return `7(${team1Tiebreak}) - 6(${team2Tiebreak})`;
-                    } else {
-                        return `6(${team1Tiebreak}) - 7(${team2Tiebreak})`;
-                    }
-                } else {
-                    return `${score.team1} - ${score.team2}`;
-                }
             }
 
             showScreen(screenId) {
@@ -1316,7 +1175,6 @@
             }
 
             startTournament() {
-                // Collect player names
                 this.allPlayers = [];
                 for (let i = 0; i < this.playerCount; i++) {
                     const input = document.getElementById(`player-${i}`);
@@ -1331,10 +1189,8 @@
                     return;
                 }
 
-                // SHUFFLE PLAYERS FOR FAIR START
                 this.allPlayers = this.shuffleArray(this.allPlayers);
 
-                // Initialize player stats with rest tracking
                 this.allPlayers.forEach(player => {
                     this.playerStats[player] = { 
                         wins: 0, 
@@ -1354,26 +1210,22 @@
                 this.generateMatches();
                 this.displayTournament();
                 this.showScreen('tournament-screen');
-                this.saveToStorage(); // Save immediately when tournament starts
+                this.saveToStorage();
             }
 
             generateMatches() {
                 const playersPerMatch = 4;
                 const totalPlayingPlayers = this.courtCount * playersPerMatch;
                 
-                // For first round, use existing logic
                 if (this.currentRound === 1) {
                     this.players = this.allPlayers.slice(0, totalPlayingPlayers);
                     this.waitingPlayers = this.allPlayers.slice(totalPlayingPlayers);
                 } else {
-                    // FAIR ROTATION LOGIC - ALL WAITING PLAYERS PLAY NEXT
                     this.fairPlayerRotation();
                 }
 
-                // Update player stats
                 this.updatePlayerStats();
 
-                // Generate matches for each court
                 this.matches = [];
                 for (let court = 0; court < this.courtCount; court++) {
                     const startIndex = court * playersPerMatch;
@@ -1393,19 +1245,15 @@
                 }
             }
 
-            // FAIR ROTATION ALGORITHM
             fairPlayerRotation() {
                 const playersPerMatch = 4;
                 const totalPlayingPlayers = this.courtCount * playersPerMatch;
                 
-                // Step 1: ALL waiting players MUST play next (priority)
                 let nextPlayers = [...this.waitingPlayers];
                 
-                // Step 2: Fill remaining spots with most-rested players
                 const spotsNeeded = totalPlayingPlayers - nextPlayers.length;
                 
                 if (spotsNeeded > 0) {
-                    // Get players ordered by rest (most rested first)
                     const currentlyPlaying = this.players.filter(p => !this.waitingPlayers.includes(p));
                     const restingPlayers = currentlyPlaying.sort((a, b) => {
                         const aRest = this.playerStats[a].matchesRested;
@@ -1413,23 +1261,18 @@
                         const aPlayed = this.playerStats[a].matchesPlayed;
                         const bPlayed = this.playerStats[b].matchesPlayed;
                         
-                        // Prioritize players who have rested more
                         if (aRest !== bRest) return bRest - aRest;
-                        // Then players who have played less
                         return aPlayed - bPlayed;
                     });
                     
-                    // Add most-rested players to fill remaining spots
                     nextPlayers.push(...restingPlayers.slice(0, spotsNeeded));
                 }
                 
-                // Update arrays
                 this.players = nextPlayers;
                 this.waitingPlayers = this.allPlayers.filter(p => !this.players.includes(p));
             }
 
             updatePlayerStats() {
-                // Update played/rested counters
                 this.players.forEach(player => {
                     this.playerStats[player].matchesPlayed++;
                     this.playerStats[player].lastPlayedRound = this.currentRound;
@@ -1441,20 +1284,12 @@
             }
 
             displayTournament() {
-                // Update round and format display
                 document.getElementById('current-round').textContent = `Round ${this.currentRound}`;
                 document.getElementById('match-format-display').textContent = this.getFormatDisplayName();
 
-                // Display waiting players
                 this.displayWaitingPlayers();
-
-                // Display current matches
                 this.displayCurrentMatches();
-
-                // Display match history
                 this.displayMatchHistory();
-
-                // Check if round is complete
                 this.updateNextRoundButton();
             }
 
@@ -1525,7 +1360,6 @@
                 if (this.matchHistory.length === 0) {
                     container.innerHTML = '<p class="empty-state">No completed matches yet</p>';
                 } else {
-                    // FIXED: Show ALL matches with proper scrolling
                     this.matchHistory.slice().reverse().forEach(match => {
                         const historyDiv = document.createElement('div');
                         historyDiv.className = 'history-item';
@@ -1545,7 +1379,6 @@
                 }
             }
 
-            // CORRECTED PADEL SCORING FORMAT based on the image provided
             formatPadelScore(score, isHistory = false) {
                 if (!score) return '';
                 
@@ -1553,12 +1386,9 @@
                     const team1Tiebreak = score.tiebreak.team1;
                     const team2Tiebreak = score.tiebreak.team2;
                     
-                    // Determine winner and format score accordingly
                     if (team1Tiebreak > team2Tiebreak) {
-                        // Team 1 won the tiebreak
                         return `7<span class="tiebreak-score">${team1Tiebreak}</span> - 6<span class="tiebreak-score">${team2Tiebreak}</span>`;
                     } else {
-                        // Team 2 won the tiebreak  
                         return `6<span class="tiebreak-score">${team1Tiebreak}</span> - 7<span class="tiebreak-score">${team2Tiebreak}</span>`;
                     }
                 } else {
@@ -1572,20 +1402,16 @@
 
                 this.currentMatchIndex = matchId;
 
-                // Set modal content
                 document.getElementById('modal-match-format').textContent = this.getFormatDisplayName();
                 document.getElementById('team1-name').textContent = match.team1.join(' & ');
                 document.getElementById('team2-name').textContent = match.team2.join(' & ');
                 document.getElementById('team1-players').textContent = match.team1.join(' + ');
                 document.getElementById('team2-players').textContent = match.team2.join(' + ');
 
-                // Populate score dropdowns based on format
                 this.populateScoreDropdowns();
 
-                // Reset tiebreak section
                 document.getElementById('tiebreak-section').style.display = 'none';
 
-                // Show modal
                 document.getElementById('match-modal').classList.add('active');
             }
 
@@ -1605,7 +1431,7 @@
                         maxScore = 3;
                         break;
                     case 'full_set':
-                        maxScore = 7; // Allow up to 7 for tiebreak scenarios
+                        maxScore = 7;
                         break;
                 }
 
@@ -1639,7 +1465,6 @@
                 const team1Score = parseInt(document.getElementById('team1-score').value);
                 const team2Score = parseInt(document.getElementById('team2-score').value);
                 
-                // Validate scores
                 if (!this.validateScore(team1Score, team2Score)) {
                     alert('Invalid score! Please check the scoring rules for your selected format.');
                     return;
@@ -1648,7 +1473,6 @@
                 const match = this.matches.find(m => m.id === this.currentMatchIndex);
                 if (!match) return;
 
-                // Handle tiebreak if needed
                 let finalScore = { team1: team1Score, team2: team2Score };
                 let winner, loser;
                 
@@ -1666,7 +1490,6 @@
                         return;
                     }
                     
-                    // Store the actual tiebreak scores and keep set score at 6-6 for formatting  
                     finalScore.tiebreak = { team1: tiebreak1, team2: tiebreak2 };
                     
                     winner = tiebreak1 > tiebreak2 ? match.team1 : match.team2;
@@ -1676,12 +1499,10 @@
                     loser = team1Score > team2Score ? match.team2 : match.team1;
                 }
 
-                // Update match
                 match.score = finalScore;
                 match.winner = winner;
                 match.completed = true;
 
-                // Update player stats
                 winner.forEach(player => {
                     this.playerStats[player].wins++;
                     this.playerStats[player].matches++;
@@ -1691,7 +1512,6 @@
                     this.playerStats[player].matches++;
                 });
 
-                // Add to history
                 this.matchHistory.push({
                     round: this.currentRound,
                     team1: match.team1,
@@ -1702,7 +1522,7 @@
 
                 this.closeModal();
                 this.displayTournament();
-                this.saveToStorage(); // Save immediately after score entry
+                this.saveToStorage();
             }
 
             validateScore(score1, score2) {
@@ -1712,8 +1532,7 @@
                     case 'best_of_5':
                         return (score1 === 3 && score2 < 3) || (score2 === 3 && score1 < 3);
                     case 'full_set':
-                        // Standard set: win by 6 with margin of 2, or 7-5, or tiebreak at 6-6
-                        if (score1 === 6 && score2 === 6) return true; // Tiebreak will be handled
+                        if (score1 === 6 && score2 === 6) return true;
                         return (score1 >= 6 && score2 < 6 && (score1 - score2) >= 2) || 
                                (score2 >= 6 && score1 < 6 && (score2 - score1) >= 2) ||
                                (score1 === 7 && score2 === 5) || (score2 === 7 && score1 === 5);
@@ -1734,9 +1553,9 @@
 
             nextRound() {
                 this.currentRound++;
-                this.generateMatches(); // Uses fair rotation logic
+                this.generateMatches();
                 this.displayTournament();
-                this.saveToStorage(); // Save after round change
+                this.saveToStorage();
             }
 
             finishTournament() {
@@ -1745,7 +1564,6 @@
             }
 
             calculateStatistics() {
-                // Calculate best and worst performing pairs
                 const pairStats = {};
                 
                 this.matchHistory.forEach(match => {
@@ -1762,21 +1580,18 @@
                     pairStats[loserKey].losses++;
                 });
 
-                // Find best and worst pairs
                 const pairEntries = Object.entries(pairStats);
                 const bestPair = pairEntries.reduce((best, current) => 
                     current[1].wins > best[1].wins ? current : best, pairEntries[0] || ['None', {wins: 0, losses: 0}]);
                 const worstPair = pairEntries.reduce((worst, current) => 
                     current[1].losses > worst[1].losses ? current : worst, pairEntries[0] || ['None', {wins: 0, losses: 0}]);
 
-                // Find individual best and worst
                 const playerEntries = Object.entries(this.playerStats);
                 const mostWins = playerEntries.reduce((best, current) => 
                     current[1].wins > best[1].wins ? current : best, playerEntries[0] || ['None', {wins: 0}]);
                 const mostLosses = playerEntries.reduce((worst, current) => 
                     current[1].losses > worst[1].losses ? current : worst, playerEntries[0] || ['None', {losses: 0}]);
 
-                // Display statistics
                 document.getElementById('best-pair-stats').innerHTML = `
                     <h4>${bestPair[0]}</h4>
                     <p>${bestPair[1].wins} wins, ${bestPair[1].losses} losses</p>
@@ -1797,7 +1612,6 @@
                     <p>${mostLosses[1].losses} losses</p>
                 `;
 
-                // Individual stats table with enhanced info
                 const statsTable = document.createElement('table');
                 statsTable.className = 'stats-table';
                 statsTable.innerHTML = `
@@ -1841,7 +1655,6 @@
                 this.currentRound = 1;
                 this.tournamentActive = false;
                 
-                // Clear all storage methods
                 localStorage.removeItem('padelTournament');
                 sessionStorage.removeItem('padelTournamentBackup');
                 if (this.db) {
@@ -1874,7 +1687,6 @@
             }
         }
 
-        // Initialize the tournament app
         const tournament = new PadelTournament();
     </script>
 </body>
