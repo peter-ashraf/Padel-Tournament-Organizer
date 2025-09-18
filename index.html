@@ -802,6 +802,7 @@
                 </div>
                 
                 <div class="stats-actions">
+                    <button id="export-csv" class="btn btn--secondary">📊 Export CSV</button>
                     <button id="reset-from-stats" class="btn btn--outline">Reset Tournament</button>
                     <button id="new-tournament" class="btn btn--primary">New Tournament</button>
                 </div>
@@ -1060,6 +1061,98 @@
                 return shuffled;
             }
 
+            // CSV EXPORT FUNCTION
+            exportToCSV() {
+                try {
+                    let csvContent = "data:text/csv;charset=utf-8,";
+                    
+                    // Tournament Info
+                    csvContent += "PADEL TOURNAMENT RESULTS\n";
+                    csvContent += `Date: ${new Date().toLocaleDateString()}\n`;
+                    csvContent += `Format: ${this.getFormatDisplayName()}\n`;
+                    csvContent += `Total Rounds: ${this.currentRound - 1}\n`;
+                    csvContent += `Players: ${this.allPlayers.length}\n`;
+                    csvContent += `Courts: ${this.courtCount}\n\n`;
+                    
+                    // Match History
+                    csvContent += "MATCH HISTORY\n";
+                    csvContent += "Round,Team 1,Team 2,Winner,Score\n";
+                    
+                    this.matchHistory.forEach(match => {
+                        const scoreText = this.formatPadelScoreForCSV(match.score);
+                        csvContent += `${match.round},"${match.team1.join(' & ')}","${match.team2.join(' & ')}","${match.winner.join(' & ')}","${scoreText}"\n`;
+                    });
+                    
+                    csvContent += "\n";
+                    
+                    // Player Statistics
+                    csvContent += "PLAYER STATISTICS\n";
+                    csvContent += "Player,Matches,Wins,Losses,Win Rate %,Times Played,Times Rested\n";
+                    
+                    Object.entries(this.playerStats).forEach(([name, stats]) => {
+                        const winRate = stats.matches > 0 ? Math.round(stats.wins / stats.matches * 100) : 0;
+                        csvContent += `${name},${stats.matches},${stats.wins},${stats.losses},${winRate}%,${stats.matchesPlayed || 0},${stats.matchesRested || 0}\n`;
+                    });
+                    
+                    csvContent += "\n";
+                    
+                    // Pair Statistics
+                    const pairStats = {};
+                    this.matchHistory.forEach(match => {
+                        const team1Key = match.team1.sort().join(' & ');
+                        const team2Key = match.team2.sort().join(' & ');
+                        
+                        if (!pairStats[team1Key]) pairStats[team1Key] = { wins: 0, losses: 0 };
+                        if (!pairStats[team2Key]) pairStats[team2Key] = { wins: 0, losses: 0 };
+                        
+                        const winnerKey = match.winner.sort().join(' & ');
+                        const loserKey = winnerKey === team1Key ? team2Key : team1Key;
+                        
+                        pairStats[winnerKey].wins++;
+                        pairStats[loserKey].losses++;
+                    });
+                    
+                    csvContent += "PAIR STATISTICS\n";
+                    csvContent += "Pair,Wins,Losses,Total Matches,Win Rate %\n";
+                    
+                    Object.entries(pairStats).forEach(([pair, stats]) => {
+                        const total = stats.wins + stats.losses;
+                        const winRate = total > 0 ? Math.round(stats.wins / total * 100) : 0;
+                        csvContent += `"${pair}",${stats.wins},${stats.losses},${total},${winRate}%\n`;
+                    });
+                    
+                    // Create and download file
+                    const encodedUri = encodeURI(csvContent);
+                    const link = document.createElement("a");
+                    link.setAttribute("href", encodedUri);
+                    link.setAttribute("download", `padel_tournament_${new Date().toISOString().split('T')[0]}.csv`);
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                } catch (error) {
+                    alert('Export failed. Please try again.');
+                    console.error('Export error:', error);
+                }
+            }
+
+            formatPadelScoreForCSV(score) {
+                if (!score) return '';
+                
+                if (score.tiebreak) {
+                    const team1Tiebreak = score.tiebreak.team1;
+                    const team2Tiebreak = score.tiebreak.team2;
+                    
+                    if (team1Tiebreak > team2Tiebreak) {
+                        return `7(${team1Tiebreak}) - 6(${team2Tiebreak})`;
+                    } else {
+                        return `6(${team1Tiebreak}) - 7(${team2Tiebreak})`;
+                    }
+                } else {
+                    return `${score.team1} - ${score.team2}`;
+                }
+            }
+
             bindEvents() {
                 document.getElementById('player-count').addEventListener('change', (e) => {
                     this.playerCount = parseInt(e.target.value);
@@ -1112,6 +1205,11 @@
                     if (confirm('Are you sure you want to reset the tournament?')) {
                         this.resetTournament();
                     }
+                });
+
+                // CSV EXPORT EVENT
+                document.getElementById('export-csv').addEventListener('click', () => {
+                    this.exportToCSV();
                 });
 
                 document.getElementById('close-match-modal').addEventListener('click', () => {
