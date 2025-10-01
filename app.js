@@ -13,7 +13,9 @@ class TournamentManager {
             matchFormat: 'best_of_3'
         };
         this.playerConsecutiveMatches = {};
-        
+        // NEW: Track player partnerships to ensure variety
+        this.playerPartnerships = {};
+        this.playerOpponents = {};
         this.init();
     }
 
@@ -80,7 +82,7 @@ class TournamentManager {
         // Tournament controls
         const nextRoundBtn = document.getElementById('nextRound');
         const endTournamentBtn = document.getElementById('endTournament');
-        
+
         if (nextRoundBtn) {
             nextRoundBtn.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -107,7 +109,7 @@ class TournamentManager {
         // Statistics modal
         const statsBtn = document.getElementById('statsBtn');
         const closeStats = document.getElementById('closeStats');
-        
+
         if (statsBtn) {
             statsBtn.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -144,26 +146,19 @@ class TournamentManager {
     initializePlayerInputs() {
         const playersGrid = document.getElementById('playersGrid');
         if (!playersGrid) return;
-        
+
         playersGrid.innerHTML = '';
 
         for (let i = 0; i < this.settings.numPlayers; i++) {
             const playerDiv = document.createElement('div');
             playerDiv.className = 'player-combo';
-            
             const inputId = `player-input-${i}`;
             const suggestionsId = `suggestions-${i}`;
-            
+
             playerDiv.innerHTML = `
-                <input 
-                    type="text" 
-                    class="form-control player-input" 
-                    id="${inputId}"
-                    placeholder="Player ${i + 1}" 
-                    data-player-index="${i}"
-                    autocomplete="off"
-                >
-                <div class="player-suggestions hidden" id="${suggestionsId}" data-suggestions-for="${i}"></div>
+                <input type="text" class="form-control player-input" id="${inputId}" 
+                       placeholder="Player ${i + 1}" data-player-index="${i}" autocomplete="off">
+                <div class="player-suggestions hidden" id="${suggestionsId}" data-suggestions-for="${inputId}"></div>
             `;
 
             playersGrid.appendChild(playerDiv);
@@ -196,7 +191,7 @@ class TournamentManager {
     handlePlayerInput(event, suggestionsDiv) {
         const input = event.target;
         const value = input.value.toLowerCase();
-        
+
         if (value.length === 0) {
             suggestionsDiv.classList.add('hidden');
             return;
@@ -247,7 +242,7 @@ class TournamentManager {
             if (name) {
                 this.players.push({
                     name: name,
-                    id: `player_${index}`
+                    id: `player${index}`
                 });
             }
         });
@@ -278,6 +273,9 @@ class TournamentManager {
             this.playerConsecutiveMatches[player.name] = 0;
         });
 
+        // NEW: Initialize partnership and opponent tracking
+        this.initializePartnershipTracking();
+
         // Reset tournament state
         this.currentRound = 1;
         this.matches = [];
@@ -289,7 +287,6 @@ class TournamentManager {
         // Switch to tournament view
         const setupSection = document.getElementById('tournamentSetup');
         const activeSection = document.getElementById('tournamentActive');
-        
         if (setupSection) setupSection.classList.add('hidden');
         if (activeSection) activeSection.classList.remove('hidden');
 
@@ -297,31 +294,56 @@ class TournamentManager {
         this.updateTournamentInfo();
     }
 
+    // NEW: Initialize partnership tracking
+    initializePartnershipTracking() {
+        this.playerPartnerships = {};
+        this.playerOpponents = {};
+        
+        this.players.forEach(player => {
+            this.playerPartnerships[player.name] = {};
+            this.playerOpponents[player.name] = {};
+            
+            this.players.forEach(otherPlayer => {
+                if (player.name !== otherPlayer.name) {
+                    this.playerPartnerships[player.name][otherPlayer.name] = 0;
+                    this.playerOpponents[player.name][otherPlayer.name] = 0;
+                }
+            });
+        });
+    }
+
+    // IMPROVED: Generate matches with better rotation logic
     generateMatches() {
         this.matches = [];
         const playersPerCourt = 4;
         const totalPlayingPlayers = this.settings.numCourts * playersPerCourt;
-        
-        // Get players who should play this round (considering consecutive matches)
+
+        // Get players who should play this round with improved selection
         const availablePlayers = this.getAvailablePlayersForRound();
         const playingPlayers = availablePlayers.slice(0, totalPlayingPlayers);
         const waitingPlayers = this.players.filter(p => !playingPlayers.includes(p));
 
-        // Create matches for each court
+        // Create matches for each court with optimal pairing
         for (let court = 0; court < this.settings.numCourts; court++) {
             const courtPlayers = playingPlayers.slice(court * playersPerCourt, (court + 1) * playersPerCourt);
             
             if (courtPlayers.length === playersPerCourt) {
+                // NEW: Use smart pairing instead of sequential pairing
+                const teams = this.createOptimalTeams(courtPlayers);
+                
                 const match = {
-                    id: `match_${court + 1}_${this.currentRound}`,
+                    id: `match${court + 1}_${this.currentRound}`,
                     court: court + 1,
                     round: this.currentRound,
-                    team1: [courtPlayers[0], courtPlayers[1]],
-                    team2: [courtPlayers[2], courtPlayers[3]],
+                    team1: teams.team1,
+                    team2: teams.team2,
                     format: this.settings.matchFormat
                 };
                 
                 this.matches.push(match);
+                
+                // Update partnership and opponent tracking
+                this.updatePartnershipTracking(teams.team1, teams.team2);
             }
         }
 
@@ -330,16 +352,90 @@ class TournamentManager {
             this.playerStats[player.name].matchesPlayed++;
             this.playerConsecutiveMatches[player.name]++;
         });
-
+        
         waitingPlayers.forEach(player => {
             this.playerStats[player.name].timesSat++;
-            this.playerConsecutiveMatches[player.name] = 0;
+            this.playerConsecutiveMatches[player.name] = 0; // Reset consecutive counter
         });
 
         this.renderMatches();
         this.renderWaitingPlayers(waitingPlayers);
     }
 
+    // NEW: Create optimal team pairings to maximize variety
+    createOptimalTeams(courtPlayers) {
+        const players = [...courtPlayers];
+        let bestPairing = null;
+        let bestScore = -1;
+        
+        // Try all possible team combinations (there are only 3 unique ways to pair 4 players)
+        const possiblePairings = [
+            { team1: [players[0], players[1]], team2: [players[2], players[3]] },
+            { team1: [players[0], players[2]], team2: [players[1], players[3]] },
+            { team1: [players[0], players[3]], team2: [players[1], players[2]] }
+        ];
+        
+        possiblePairings.forEach(pairing => {
+            const score = this.calculatePairingScore(pairing);
+            if (score > bestScore) {
+                bestScore = score;
+                bestPairing = pairing;
+            }
+        });
+        
+        return bestPairing || possiblePairings[0]; // Fallback to first option
+    }
+
+    // NEW: Calculate pairing score to minimize repeated partnerships
+    calculatePairingScore(pairing) {
+        let score = 0;
+        
+        // Check team1 partnership frequency (lower is better)
+        const team1Partner1 = pairing.team1[0].name;
+        const team1Partner2 = pairing.team1[1].name;
+        const team1Partnerships = this.playerPartnerships[team1Partner1][team1Partner2] || 0;
+        
+        // Check team2 partnership frequency
+        const team2Partner1 = pairing.team2[0].name;
+        const team2Partner2 = pairing.team2[1].name;
+        const team2Partnerships = this.playerPartnerships[team2Partner1][team2Partner2] || 0;
+        
+        // Check opponent frequency
+        let opponentFrequency = 0;
+        pairing.team1.forEach(player1 => {
+            pairing.team2.forEach(player2 => {
+                opponentFrequency += this.playerOpponents[player1.name][player2.name] || 0;
+            });
+        });
+        
+        // Higher score for less frequent partnerships and opponents
+        // Invert the counts so lower frequency = higher score
+        score = 100 - (team1Partnerships * 10) - (team2Partnerships * 10) - (opponentFrequency * 5);
+        
+        // Add some randomness to break ties
+        score += Math.random() * 10;
+        
+        return score;
+    }
+
+    // NEW: Update partnership and opponent tracking
+    updatePartnershipTracking(team1, team2) {
+        // Update partnerships
+        this.playerPartnerships[team1[0].name][team1[1].name]++;
+        this.playerPartnerships[team1[1].name][team1[0].name]++;
+        this.playerPartnerships[team2[0].name][team2[1].name]++;
+        this.playerPartnerships[team2[1].name][team2[0].name]++;
+        
+        // Update opponents
+        team1.forEach(player1 => {
+            team2.forEach(player2 => {
+                this.playerOpponents[player1.name][player2.name]++;
+                this.playerOpponents[player2.name][player1.name]++;
+            });
+        });
+    }
+
+    // IMPROVED: Better player selection for rounds
     getAvailablePlayersForRound() {
         // Sort players by priority: those who sat out get priority, then by consecutive matches
         return [...this.players].sort((a, b) => {
@@ -366,12 +462,13 @@ class TournamentManager {
     renderMatches() {
         const matchesGrid = document.getElementById('matchesGrid');
         if (!matchesGrid) return;
-        
+
         matchesGrid.innerHTML = '';
 
         this.matches.forEach(match => {
             const matchCard = document.createElement('div');
             matchCard.className = 'match-card';
+            
             matchCard.innerHTML = `
                 <div class="match-header">
                     <span class="court-label">Court ${match.court}</span>
@@ -387,6 +484,7 @@ class TournamentManager {
                     </div>
                 </div>
             `;
+            
             matchesGrid.appendChild(matchCard);
         });
     }
@@ -438,20 +536,18 @@ class TournamentManager {
     renderMatchHistory() {
         const historyList = document.getElementById('historyList');
         if (!historyList) return;
-        
+
         historyList.innerHTML = '';
 
         // Show recent rounds first
         const recentHistory = [...this.matchHistory].reverse().slice(0, 5);
-
+        
         recentHistory.forEach(roundData => {
             const roundDiv = document.createElement('div');
             roundDiv.className = 'history-round';
             
             roundDiv.innerHTML = `
-                <div class="history-round-header">
-                    Round ${roundData.round}
-                </div>
+                <div class="history-round-header">Round ${roundData.round}</div>
                 <div class="history-matches">
                     ${roundData.matches.map(match => `
                         <div class="history-match">
@@ -475,7 +571,7 @@ class TournamentManager {
         const totalPlayersSpan = document.getElementById('totalPlayers');
         const totalCourtsSpan = document.getElementById('totalCourts');
         const currentFormatSpan = document.getElementById('currentFormat');
-        
+
         if (currentRoundSpan) currentRoundSpan.textContent = this.currentRound;
         if (totalPlayersSpan) totalPlayersSpan.textContent = this.players.length;
         if (totalCourtsSpan) totalCourtsSpan.textContent = this.settings.numCourts;
@@ -487,10 +583,9 @@ class TournamentManager {
             // Reset to setup view
             const activeSection = document.getElementById('tournamentActive');
             const setupSection = document.getElementById('tournamentSetup');
-            
             if (activeSection) activeSection.classList.add('hidden');
             if (setupSection) setupSection.classList.remove('hidden');
-            
+
             // Clear tournament data
             this.players = [];
             this.matches = [];
@@ -498,7 +593,9 @@ class TournamentManager {
             this.currentRound = 1;
             this.playerStats = {};
             this.playerConsecutiveMatches = {};
-            
+            this.playerPartnerships = {};
+            this.playerOpponents = {};
+
             // Clear player inputs
             document.querySelectorAll('.player-input').forEach(input => {
                 input.value = '';
@@ -509,9 +606,8 @@ class TournamentManager {
     showStatistics() {
         const modal = document.getElementById('statsModal');
         const statsContent = document.getElementById('statsContent');
-        
         if (!modal || !statsContent) return;
-        
+
         if (Object.keys(this.playerStats).length === 0) {
             statsContent.innerHTML = '<p class="text-center text-secondary">No tournament data available.</p>';
         } else {
@@ -530,14 +626,14 @@ class TournamentManager {
                         ${Object.entries(this.playerStats).map(([name, stats]) => `
                             <div class="player-stat">
                                 <span class="player-name">${name}</span>
-                                <span class="player-count">${stats.matchesPlayed} played / ${stats.timesSat} rested</span>
+                                <span class="player-counts">${stats.matchesPlayed} played • ${stats.timesSat} rested</span>
                             </div>
                         `).join('')}
                     </div>
                 </div>
             `;
         }
-        
+
         modal.classList.remove('hidden');
     }
 
@@ -551,12 +647,13 @@ class TournamentManager {
     setupTheme() {
         const themeToggle = document.getElementById('themeToggle');
         const themeIcon = document.querySelector('.theme-icon');
-        
+
         // Check for saved theme preference or default to light mode
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         const currentTheme = prefersDark ? 'dark' : 'light';
-        
+
         document.documentElement.setAttribute('data-color-scheme', currentTheme);
+
         if (themeIcon) {
             themeIcon.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
         }
@@ -566,8 +663,9 @@ class TournamentManager {
         const currentTheme = document.documentElement.getAttribute('data-color-scheme');
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
         const themeIcon = document.querySelector('.theme-icon');
-        
+
         document.documentElement.setAttribute('data-color-scheme', newTheme);
+
         if (themeIcon) {
             themeIcon.textContent = newTheme === 'dark' ? '☀️' : '🌙';
         }
@@ -577,12 +675,7 @@ class TournamentManager {
         if ('serviceWorker' in navigator) {
             const swCode = `
                 const CACHE_NAME = 'padel-tournament-v1';
-                const urlsToCache = [
-                    '/',
-                    '/index.html',
-                    '/style.css',
-                    '/app.js'
-                ];
+                const urlsToCache = ['/', 'index.html', 'style.css', 'app.js'];
 
                 self.addEventListener('install', event => {
                     event.waitUntil(
