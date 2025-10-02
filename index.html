@@ -6,11 +6,11 @@
     <meta name="description" content="Enhanced Padel Tournament Organizer - Progressive Web App with Fixed Icons">
     <title>Padel Tournament Organizer</title>
     
-    <!-- Fixed Icons for PWA - NOW USING EXTERNAL FILES -->
-    <link rel="icon" href="padel-icon.png">
+    <!-- Fixed Icons for PWA -->
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjgiIGhlaWdodD0iMTI4IiB2aWV3Qm94PSIwIDAgMTI4IDEyOCI+PGNpcmNsZSBjeD0iNjQiIGN5PSI2NCIgcj0iNjQiIGZpbGw9IiMyZWNjNzEiLz48cGF0aCBkPSJNNDAgNDBMODggNDBBOCA4IDAgMCAwIDk2IDQ4TDk2IDgwQTggOCAwIDAgMCA4OCA4OEw0MCA4OEE4IDggMCAwIDAgMzIgODBMMzIgNDhBOCA4IDAgMCAwIDQwIDQwWiIgZmlsbD0id2hpdGUiLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjU2IiByPSIzIiBmaWxsPSIjMmVjYzcxIi8+PGNpcmNsZSBjeD0iNzgiIGN5PSI1NiIgcj0iMyIgZmlsbD0iIzJlY2M3MSIvPjxjaXJjbGUgY3g9IjY0IiBjeD0iNzIiIHI9IjMiIGZpbGw9IiNmMzljMTIiLz48L3N2Zz4=">
     
-    <!-- Apple Touch Icons - NOW USING EXTERNAL FILES -->
-    <link rel="apple-touch-icon" sizes="180x180" href="padel-icon.png">
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgMTgwIDE4MCI+PHJlY3Qgd2lkdGg9IjE4MCIgaGVpZ2h0PSIxODAiIHJ4PSIzNiIgZmlsbD0iIzIxODA5NiIvPjxwYXRoIGQ9Ik02MCA2MEwxMjAgNjBBMTIgMTIgMCAwIDAgMTMyIDcyTDEzMiAxMDhBMTIgMTIgMCAwIDAgMTIwIDEyMEw2MCAxMjBBMTIgMTIgMCAwIDAgNDggMTA4TDQ4IDcyQTEyIDEyIDAgMCAwIDYwIDYwWiIgZmlsbD0id2hpdGUiLz48cGF0aCBkPSJNNzIgNzZMMTA4IDc2IiBzdHJva2U9IiMyMTgwOTYiIHN0cm9rZS13aWR0aD0iMiIvPjxjaXJjbGUgY3g9Ijc0IiBjeT0iODQiIHI9IjMiIGZpbGw9IiMyMTgwOTYiLz48Y2lyY2xlIGN4PSIxMDYiIGN5PSI4NCIgcj0iMyIgZmlsbD0iIzIxODA5NiIvPjxjaXJjbGUgY3g9IjkwIiBjeT0iOTYiIHI9IjQiIGZpbGw9IiNmMzljMTIiLz48L3N2Zz4=">
     
     <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#218096">
@@ -19,8 +19,8 @@
     <meta name="apple-mobile-web-app-title" content="Padel Tournament">
     <meta name="mobile-web-app-capable" content="yes">
     
-    <!-- PWA Manifest - NOW USING EXTERNAL FILE -->
-    <link rel="manifest" href="manifest.json">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiUGFkZWwgVG91cm5hbWVudCBPcmdhbml6ZXIiLCJzaG9ydF9uYW1lIjoiUGFkZWwgVG91cm5hbWVudCIsInN0YXJ0X3VybCI6Ii8iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjZmNmY2Y5IiwidGhlbWVfY29sb3IiOiIjMjE4MDk2IiwiaWNvbnMiOlt7InNyYyI6ImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNRUE9Iiwic2l6ZXMiOiIxOTJ4MTkyIDUxMng1MTIiLCJ0eXBlIjoiaW1hZ2Uvc3ZnK3htbCIsInB1cnBvc2UiOiJhbnkgbWFza2FibGUifV19">
     
     <style>
         :root {
@@ -654,6 +654,10 @@
             }
         }
     </style>
+
+<link rel="apple-touch-icon-precomposed" sizes="1024x1024" href="padel-icon.png">
+<link rel="apple-touch-icon" sizes="1024x1024" href="padel-icon.png">
+
 </head>
 <body>
     <datalist id="player-names">
@@ -749,6 +753,17 @@
                 <h3>Current Matches</h3>
                 <div id="current-matches" class="matches-container">
                 </div>
+            <!-- History of the Day (inserted) -->
+            <section id="history-of-day-wrapper" class="collapsible-section" aria-hidden="true" style="display:block;">
+              <button id="toggle-history-of-day" class="collapsible-toggle" aria-expanded="false" style="all:unset;cursor:pointer;">
+                <div class="collapsible-header">History of the Day ⯈</div>
+              </button>
+              <div id="history-of-day" class="collapsible-content" style="display:none; margin-top:8px;">
+                <div id="history-empty" style="opacity:0.7;font-size:0.9em;">No history yet. Play a round to populate the history.</div>
+                <ul id="history-list" style="list-style:none;margin:0;padding:0;"></ul>
+              </div>
+            </section>
+    
                 <div class="round-actions">
                     <button id="next-round-btn" class="btn btn--primary btn--full-width">Next Round</button>
                 </div>
@@ -876,10 +891,6 @@
                 this.dbName = 'PadelTournamentDB';
                 this.dbVersion = 1;
                 
-                // NEW: Track player partnerships to ensure variety
-                this.playerPartnerships = {};
-                this.playerOpponents = {};
-                
                 this.init();
             }
 
@@ -949,6 +960,7 @@
             }
 
             saveToStorage() {
+
                 const data = {
                     players: this.players,
                     allPlayers: this.allPlayers,
@@ -961,8 +973,8 @@
                     playerStats: this.playerStats,
                     waitingPlayers: this.waitingPlayers,
                     tournamentActive: this.tournamentActive,
-                    playerPartnerships: this.playerPartnerships,
-                    playerOpponents: this.playerOpponents,
+                    pairHistory: this.pairHistory || {},
+                    historyOfDay: this.historyOfDay || [],
                     timestamp: Date.now()
                 };
 
@@ -973,7 +985,9 @@
                 } catch (error) {
                     console.error('Failed to save tournament data:', error);
                 }
-            }
+
+}
+
 
             startAutoSave() {
                 setInterval(() => {
@@ -1293,7 +1307,6 @@
                     return;
                 }
 
-                // CRITICAL FIX: Randomly shuffle players before first round
                 this.allPlayers = this.shuffleArray(this.allPlayers);
 
                 this.allPlayers.forEach(player => {
@@ -1307,9 +1320,6 @@
                     };
                 });
 
-                // NEW: Initialize partnership and opponent tracking
-                this.initializePartnershipTracking();
-
                 this.currentRound = 1;
                 this.matches = [];
                 this.matchHistory = [];
@@ -1321,168 +1331,112 @@
                 this.saveToStorage();
             }
 
-            // NEW: Initialize partnership tracking
-            initializePartnershipTracking() {
-                this.playerPartnerships = {};
-                this.playerOpponents = {};
-                
-                this.allPlayers.forEach(player => {
-                    this.playerPartnerships[player] = {};
-                    this.playerOpponents[player] = {};
-                    
-                    this.allPlayers.forEach(otherPlayer => {
-                        if (player !== otherPlayer) {
-                            this.playerPartnerships[player][otherPlayer] = 0;
-                            this.playerOpponents[player][otherPlayer] = 0;
-                        }
-                    });
-                });
-            }
-
-            // IMPROVED: Generate matches with better rotation logic
             generateMatches() {
-                this.matches = [];
+
                 const playersPerMatch = 4;
                 const totalPlayingPlayers = this.courtCount * playersPerMatch;
+                
+                if (this.currentRound === 1) {
+                    this.players = this.allPlayers.slice(0, totalPlayingPlayers);
+                    this.waitingPlayers = this.allPlayers.slice(totalPlayingPlayers);
+                } else {
+                    this.fairPlayerRotation();
+                }
 
-                // Get players who should play this round with improved selection
-                const availablePlayers = this.getAvailablePlayersForRound();
-                const playingPlayers = availablePlayers.slice(0, totalPlayingPlayers);
-                const waitingPlayers = this.allPlayers.filter(p => !playingPlayers.includes(p));
+                this.updatePlayerStats();
 
-                // Create matches for each court with optimal pairing
+                // Ensure pair/history structures exist
+                this.pairHistory = this.pairHistory || {};
+                this.historyOfDay = this.historyOfDay || [];
+
+                this.matches = [];
                 for (let court = 0; court < this.courtCount; court++) {
                     const startIndex = court * playersPerMatch;
-                    const courtPlayers = playingPlayers.slice(startIndex, startIndex + playersPerMatch);
+                    let matchPlayers = this.players.slice(startIndex, startIndex + playersPerMatch);
                     
-                    if (courtPlayers.length === playersPerMatch) {
-                        // NEW: Use smart pairing instead of sequential pairing
-                        const teams = this.createOptimalTeams(courtPlayers);
-                        
+                    if (matchPlayers.length === 4) {
+                        // Choose best split based on pair history
+                        const split = this.chooseBestSplit(matchPlayers);
+                        const team1 = split.teamA;
+                        const team2 = split.teamB;
+
+                        // Update players ordering so slices match teams
+                        const ordered = [team1[0], team1[1], team2[0], team2[1]];
+                        for (let k = 0; k < 4; k++) {
+                            this.players[startIndex + k] = ordered[k];
+                        }
+
+                        // increment pair history counts for these teammate pairs
+                        this.incrPair(team1[0], team1[1]);
+                        this.incrPair(team2[0], team2[1]);
+
                         this.matches.push({
                             id: court,
                             court: court + 1,
-                            team1: teams.team1,
-                            team2: teams.team2,
+                            team1: [team1[0], team1[1]],
+                            team2: [team2[0], team2[1]],
                             score: null,
                             winner: null,
                             completed: false
                         });
-
-                        // Update partnership and opponent tracking
-                        this.updatePartnershipTracking(teams.team1, teams.team2);
                     }
                 }
 
-                // Update player statistics
-                playingPlayers.forEach(player => {
+                // Update waiting players after reordering
+                this.waitingPlayers = this.allPlayers.filter(p => !this.players.includes(p));
+
+                // Save a concise history entry for this round (replace if exists)
+                const roundSummary = {
+                    round: this.currentRound,
+                    matches: this.matches.map(m => ({ court: m.court, team1: m.team1.slice(), team2: m.team2.slice() })),
+                    resting: this.waitingPlayers.slice()
+                };
+                const idx = this.historyOfDay.findIndex(e => e.round === this.currentRound);
+                if (idx >= 0) this.historyOfDay[idx] = roundSummary; else this.historyOfDay.push(roundSummary);
+
+}
+
+
+            fairPlayerRotation() {
+                const playersPerMatch = 4;
+                const totalPlayingPlayers = this.courtCount * playersPerMatch;
+                
+                let nextPlayers = [...this.waitingPlayers];
+                
+                const spotsNeeded = totalPlayingPlayers - nextPlayers.length;
+                
+                if (spotsNeeded > 0) {
+                    const currentlyPlaying = this.players.filter(p => !this.waitingPlayers.includes(p));
+                    const restingPlayers = currentlyPlaying.sort((a, b) => {
+                        const aRest = this.playerStats[a].matchesRested;
+                        const bRest = this.playerStats[b].matchesRested;
+                        const aPlayed = this.playerStats[a].matchesPlayed;
+                        const bPlayed = this.playerStats[b].matchesPlayed;
+                        
+                        if (aRest !== bRest) return bRest - aRest;
+                        return aPlayed - bPlayed;
+                    });
+                    
+                    nextPlayers.push(...restingPlayers.slice(0, spotsNeeded));
+                }
+                
+                this.players = nextPlayers;
+                this.waitingPlayers = this.allPlayers.filter(p => !this.players.includes(p));
+            }
+
+            updatePlayerStats() {
+                this.players.forEach(player => {
                     this.playerStats[player].matchesPlayed++;
                     this.playerStats[player].lastPlayedRound = this.currentRound;
                 });
                 
-                waitingPlayers.forEach(player => {
+                this.waitingPlayers.forEach(player => {
                     this.playerStats[player].matchesRested++;
                 });
             }
 
-            // NEW: Create optimal team pairings to maximize variety
-            createOptimalTeams(courtPlayers) {
-                const players = [...courtPlayers];
-                let bestPairing = null;
-                let bestScore = -1;
-                
-                // Try all possible team combinations (there are only 3 unique ways to pair 4 players)
-                const possiblePairings = [
-                    { team1: [players[0], players[1]], team2: [players[2], players[3]] },
-                    { team1: [players[0], players[2]], team2: [players[1], players[3]] },
-                    { team1: [players[0], players[3]], team2: [players[1], players[2]] }
-                ];
-                
-                possiblePairings.forEach(pairing => {
-                    const score = this.calculatePairingScore(pairing);
-                    if (score > bestScore) {
-                        bestScore = score;
-                        bestPairing = pairing;
-                    }
-                });
-                
-                return bestPairing || possiblePairings[0]; // Fallback to first option
-            }
-
-            // NEW: Calculate pairing score to minimize repeated partnerships
-            calculatePairingScore(pairing) {
-                let score = 0;
-                
-                // Check team1 partnership frequency (lower is better)
-                const team1Partner1 = pairing.team1[0];
-                const team1Partner2 = pairing.team1[1];
-                const team1Partnerships = this.playerPartnerships[team1Partner1][team1Partner2] || 0;
-                
-                // Check team2 partnership frequency
-                const team2Partner1 = pairing.team2[0];
-                const team2Partner2 = pairing.team2[1];
-                const team2Partnerships = this.playerPartnerships[team2Partner1][team2Partner2] || 0;
-                
-                // Check opponent frequency
-                let opponentFrequency = 0;
-                pairing.team1.forEach(player1 => {
-                    pairing.team2.forEach(player2 => {
-                        opponentFrequency += this.playerOpponents[player1][player2] || 0;
-                    });
-                });
-                
-                // Higher score for less frequent partnerships and opponents
-                // Invert the counts so lower frequency = higher score
-                score = 100 - (team1Partnerships * 10) - (team2Partnerships * 10) - (opponentFrequency * 5);
-                
-                // Add some randomness to break ties
-                score += Math.random() * 10;
-                
-                return score;
-            }
-
-            // NEW: Update partnership and opponent tracking
-            updatePartnershipTracking(team1, team2) {
-                // Update partnerships
-                this.playerPartnerships[team1[0]][team1[1]]++;
-                this.playerPartnerships[team1[1]][team1[0]]++;
-                this.playerPartnerships[team2[0]][team2[1]]++;
-                this.playerPartnerships[team2[1]][team2[0]]++;
-                
-                // Update opponents
-                team1.forEach(player1 => {
-                    team2.forEach(player2 => {
-                        this.playerOpponents[player1][player2]++;
-                        this.playerOpponents[player2][player1]++;
-                    });
-                });
-            }
-
-            // IMPROVED: Better player selection for rounds
-            getAvailablePlayersForRound() {
-                // Sort players by priority: those who sat out get priority, then by consecutive matches
-                return [...this.allPlayers].sort((a, b) => {
-                    const aRested = this.playerStats[a].matchesRested || 0;
-                    const bRested = this.playerStats[b].matchesRested || 0;
-                    const aPlayed = this.playerStats[a].matchesPlayed || 0;
-                    const bPlayed = this.playerStats[b].matchesPlayed || 0;
-
-                    // Players who have rested more get higher priority
-                    if (bRested !== aRested) {
-                        return bRested - aRested;
-                    }
-
-                    // Players who have played less get higher priority
-                    if (aPlayed !== bPlayed) {
-                        return aPlayed - bPlayed;
-                    }
-
-                    // If equal, randomize
-                    return Math.random() - 0.5;
-                });
-            }
-
             displayTournament() {
+
                 document.getElementById('current-round').textContent = `Round ${this.currentRound}`;
                 document.getElementById('match-format-display').textContent = this.getFormatDisplayName();
 
@@ -1490,7 +1444,14 @@
                 this.displayCurrentMatches();
                 this.displayMatchHistory();
                 this.updateNextRoundButton();
-            }
+
+                // Render the History of the Day if available
+                if (typeof this.renderHistoryOfDay === 'function') {
+                    try { this.renderHistoryOfDay(); } catch (e) { console.error('renderHistoryOfDay failed', e); }
+                }
+
+}
+
 
             displayWaitingPlayers() {
                 const container = document.getElementById('waiting-players');
@@ -1845,6 +1806,7 @@
             }
 
             resetTournament() {
+
                 this.players = [];
                 this.allPlayers = [];
                 this.matches = [];
@@ -1853,8 +1815,8 @@
                 this.waitingPlayers = [];
                 this.currentRound = 1;
                 this.tournamentActive = false;
-                this.playerPartnerships = {};
-                this.playerOpponents = {};
+                this.pairHistory = {};
+                this.historyOfDay = [];
                 
                 localStorage.removeItem('padelTournament');
                 sessionStorage.removeItem('padelTournamentBackup');
@@ -1869,7 +1831,9 @@
                 }
                 
                 this.showScreen('welcome-screen');
-            }
+
+}
+
 
             getFormatDisplayName() {
                 switch (this.matchFormat) {
@@ -1887,8 +1851,127 @@
                 localStorage.setItem('theme', newTheme);
             }
         }
+// ---------- Pairing & History helpers (added) ----------
+PadelTournament.prototype.pairKey = function(a,b){
+    return (a < b) ? a + '|' + b : b + '|' + a;
+};
+PadelTournament.prototype.pairCount = function(a,b){
+    this.pairHistory = this.pairHistory || {};
+    return this.pairHistory[this.pairKey(a,b)] || 0;
+};
+PadelTournament.prototype.incrPair = function(a,b){
+    this.pairHistory = this.pairHistory || {};
+    const k = this.pairKey(a,b);
+    this.pairHistory[k] = (this.pairHistory[k] || 0) + 1;
+};
+PadelTournament.prototype.ensurePairHistory = function(){
+    this.pairHistory = this.pairHistory || {};
+    this.historyOfDay = this.historyOfDay || [];
+};
+
+PadelTournament.prototype.chooseBestSplit = function(fourPlayers){
+    // Evaluate 3 unique 2v2 splits and pick the one with minimal prior teammate counts
+    const combos = [];
+    for (let i=0;i<4;i++){
+        for (let j=i+1;j<4;j++){
+            const a = fourPlayers[i], b = fourPlayers[j];
+            const rest = fourPlayers.filter((_,idx)=>idx!==i && idx!==j);
+            combos.push({teamA:[a,b], teamB:[rest[0], rest[1]]});
+        }
+    }
+    // make unique by normalized key
+    const unique = [];
+    const seen = {};
+    combos.forEach(c => {
+        const t1 = c.teamA.slice().sort().join(',');
+        const t2 = c.teamB.slice().sort().join(',');
+        const key = [t1,t2].sort().join('|');
+        if (!seen[key]) { seen[key] = true; unique.push(c); }
+    });
+
+    let best = null;
+    unique.forEach(c => {
+        const a = c.teamA[0], b = c.teamA[1], c1 = c.teamB[0], d = c.teamB[1];
+        const sum = this.pairCount(a,b) + this.pairCount(c1,d);
+        const newPairs = (this.pairCount(a,b) === 0 ? 1 : 0) + (this.pairCount(c1,d) === 0 ? 1 : 0);
+        if (!best || sum < best.sum || (sum === best.sum && newPairs > best.newPairs) || (sum === best.sum && newPairs === best.newPairs && Math.random() < 0.5)) {
+            best = { combo: c, sum: sum, newPairs: newPairs };
+        }
+    });
+    return best.combo;
+};
+
+// Render history UI helper
+PadelTournament.prototype.renderHistoryOfDay = function(){
+    try {
+        const wrapper = document.getElementById('history-of-day');
+        const list = document.getElementById('history-list');
+        const empty = document.getElementById('history-empty');
+        if (!wrapper || !list || !empty) return;
+        list.innerHTML = '';
+        const hist = this.historyOfDay || [];
+        if (hist.length === 0) {
+            empty.style.display = 'block';
+            return;
+        } else {
+            empty.style.display = 'none';
+        }
+        // render latest first
+        for (let i = hist.length - 1; i >= 0; i--) {
+            const entry = hist[i];
+            const li = document.createElement('li');
+            li.style.padding = '8px 0';
+            li.style.borderBottom = '1px solid rgba(0,0,0,0.06)';
+            const roundTitle = document.createElement('div');
+            roundTitle.style.fontWeight = '600';
+            roundTitle.textContent = `Round ${entry.round}`;
+            li.appendChild(roundTitle);
+            entry.matches.forEach(m => {
+                const p = document.createElement('div');
+                p.textContent = `Court ${m.court} — ${m.team1.join(' & ')}  vs  ${m.team2.join(' & ')}`;
+                li.appendChild(p);
+            });
+            if (entry.resting && entry.resting.length) {
+                const r = document.createElement('div');
+                r.style.opacity = '0.8';
+                r.style.fontSize = '0.95em';
+                r.textContent = `Resting: ${entry.resting.join(', ')}`;
+                li.appendChild(r);
+            }
+            list.appendChild(li);
+        }
+    } catch (e) { console.error(e); }
+};
+
 
         const tournament = new PadelTournament();
     </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+    // Toggle history collapse
+    const toggle = document.getElementById('toggle-history-of-day');
+    const content = document.getElementById('history-of-day');
+    if (toggle && content) {
+        toggle.addEventListener('click', function(){
+            const expanded = toggle.getAttribute('aria-expanded') === 'true';
+            toggle.setAttribute('aria-expanded', (!expanded).toString());
+            if (expanded) {
+                content.style.display = 'none';
+            } else {
+                content.style.display = 'block';
+            }
+        });
+    }
+
+    // If app exists as global, ensure it renders history immediately
+    try {
+        if (window.app && typeof window.app.renderHistoryOfDay === 'function') {
+            window.app.renderHistoryOfDay();
+        }
+    } catch (e) { console.error(e); }
+});
+</script>
+
 </body>
 </html>
