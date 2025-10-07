@@ -1973,5 +1973,101 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 </script>
 
+
+<!-- Resume Modal Overlay (injected) -->
+<div id="resume-modal" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);color:#fff;z-index:9999;display:none;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:20px;">
+  <div style="background:#222;padding:28px;border-radius:12px;max-width:440px;width:92%;box-shadow:0 6px 30px rgba(0,0,0,0.6);">
+    <h2 style="margin:0 0 8px;font-size:1.3em;">A previous tournament was found</h2>
+    <p style="margin:0 0 16px;opacity:0.9;">Would you like to continue or start a new one?</p>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <button id="resume-continue" style="padding:12px;background:#3498db;color:#fff;border:none;border-radius:8px;font-size:1em;cursor:pointer;">Continue Tournament</button>
+      <button id="resume-new" style="padding:12px;background:#e74c3c;color:#fff;border:none;border-radius:8px;font-size:1em;cursor:pointer;">Start New Tournament</button>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  try {
+    const raw = localStorage.getItem('padelTournament');
+    if (!raw) return;
+    let data = null;
+    try { data = JSON.parse(raw); } catch(e){ data = null; }
+    const meaningful = data && (
+      data.tournamentActive === true ||
+      (Array.isArray(data.allPlayers) && data.allPlayers.length > 0) ||
+      (Array.isArray(data.matchHistory) && data.matchHistory.length > 0) ||
+      (Array.isArray(data.historyOfDay) && data.historyOfDay.length > 0) ||
+      (data.currentRound && data.currentRound > 1)
+    );
+    if (!meaningful) return;
+    const modal = document.getElementById('resume-modal');
+    if (!modal) return;
+    modal.style.display = 'flex';
+    const btnContinue = document.getElementById('resume-continue');
+    const btnNew = document.getElementById('resume-new');
+    function tryRestore() {
+      try {
+        if (typeof tournament !== 'undefined' && tournament && typeof tournament.loadFromStorage === 'function') {
+          tournament.loadFromStorage();
+          setTimeout(function(){
+            try {
+              if (tournament.tournamentActive || (Array.isArray(tournament.allPlayers) && tournament.allPlayers.length>0)) {
+                try { tournament.displayTournament(); } catch(e) {}
+                try { tournament.showScreen('tournament-screen'); } catch(e) {}
+              }
+            } catch(e) { console.error(e); }
+          }, 50);
+          return;
+        }
+        if (window.app && typeof window.app.loadFromStorage === 'function') {
+          window.app.loadFromStorage();
+          return;
+        }
+        location.reload();
+      } catch(e) {
+        console.error('Restore failed', e);
+      }
+    }
+    btnContinue.addEventListener('click', function(){
+      modal.style.display = 'none';
+      tryRestore();
+    });
+    btnNew.addEventListener('click', function(){
+      if (!confirm('Are you sure? This will clear the ongoing tournament.')) return;
+      try {
+        if (typeof tournament !== 'undefined' && tournament && typeof tournament.resetTournament === 'function') {
+          tournament.resetTournament();
+          modal.style.display = 'none';
+          return;
+        }
+        if (window.app && typeof window.app.resetTournament === 'function') {
+          window.app.resetTournament();
+          modal.style.display = 'none';
+          return;
+        }
+        localStorage.removeItem('padelTournament');
+        try { sessionStorage.removeItem('padelTournamentBackup'); } catch(e){}
+        try {
+          const req = indexedDB.open('PadelTournamentDB');
+          req.onsuccess = function(ev){
+            try {
+              const db = ev.target.result;
+              const tx = db.transaction(['tournaments'], 'readwrite');
+              tx.objectStore('tournaments').delete('current');
+              db.close();
+            } catch(e){}
+          };
+        } catch(e){}
+        modal.style.display = 'none';
+        location.reload();
+      } catch(e) { console.error(e); location.reload(); }
+    });
+  } catch(e) {
+    console.error('Resume modal error', e);
+  }
+});
+</script>
+
 </body>
 </html>
