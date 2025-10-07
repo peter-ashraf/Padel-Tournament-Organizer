@@ -1,16 +1,23 @@
 {
   "name": "Padel Tournament Organizer",
   "short_name": "Padel Tournament",
+  "description": "Organize and manage padel tournaments easily — track matches, teams, and rounds.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#fcfcf9",
   "theme_color": "#218096",
   "icons": [
     {
       "src": "padel-icon.png",
-      "sizes": "512x512",
+      "sizes": "1024x1024",
       "type": "image/png",
       "purpose": "any maskable"
+    },
+    {
+      "src": "padel-icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
     },
     {
       "src": "padel-icon.png",
