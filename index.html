@@ -20,9 +20,9 @@
     <meta name="mobile-web-app-capable" content="yes">
     
     <!-- PWA Manifest -->
-    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiUGFkZWwgVG91cm5hbWVudCBPcmdhbml6ZXIiLCJzaG9ydF9uYW1lIjoiUGFkZWwgVG91cm5hbWVudCIsInN0YXJ0X3VybCI6Ii8iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjZmNmY2Y5IiwidGhlbWVfY29sb3IiOiIjMjE4MDk2IiwiaWNvbnMiOlt7InNyYyI6ImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNRUE9Iiwic2l6ZXMiOiIxOTJ4MTkyIDUxMng1MTIiLCJ0eXBlIjoiaW1hZ2Uvc3ZnK3htbCIsInB1cnBvc2UiOiJhbnkgbWFza2FibGUifV19">
+    <link rel="manifest" href="manifest.json">
     
-    <style>
+<style>
         :root {
             --primary-color: #218096;
             --secondary-color: #34495e;
@@ -895,7 +895,6 @@
             }
 
             init() {
-                this.registerServiceWorker();
                 this.initializeTheme();
                 this.bindEvents();
                 this.initIndexedDB();
@@ -1044,34 +1043,7 @@
                 document.documentElement.setAttribute('data-color-scheme', theme);
             }
 
-            registerServiceWorker() {
-                if ('serviceWorker' in navigator) {
-                    const swCode = `
-                        const CACHE_NAME = 'padel-tournament-v3';
-                        const urlsToCache = ['/'];
-
-                        self.addEventListener('install', event => {
-                            event.waitUntil(
-                                caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
-                            );
-                        });
-
-                        self.addEventListener('fetch', event => {
-                            event.respondWith(
-                                caches.match(event.request).then(response => response || fetch(event.request))
-                            );
-                        });
-                    `;
-                    
-                    const blob = new Blob([swCode], { type: 'application/javascript' });
-                    const swUrl = URL.createObjectURL(blob);
-                    
-                    navigator.serviceWorker.register(swUrl)
-                        .then(registration => console.log('SW registered:', registration))
-                        .catch(error => console.log('SW registration failed:', error));
-                }
-            }
-
+            
             shuffleArray(array) {
                 const shuffled = [...array];
                 for (let i = shuffled.length - 1; i > 0; i--) {
@@ -2067,6 +2039,59 @@ document.addEventListener('DOMContentLoaded', function(){
     console.error('Resume modal error', e);
   }
 });
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(r => console.log('✅ Service Worker registered', r.scope))
+      .catch(err => console.error('❌ SW failed:', err));
+  });
+}
+</script>
+
+<script>
+// ===========================
+// THEME AUTO SYNC + OVERRIDE
+// ===========================
+(function initTheme() {
+  const root = document.documentElement;
+  const toggleButton = document.querySelector('.theme-toggle');
+  const storageKey = 'padelTheme';
+
+  // Detect system theme
+  const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+  // Apply theme
+  const applyTheme = (theme) => {
+    root.setAttribute('data-color-scheme', theme);
+    localStorage.setItem(storageKey, theme);
+  };
+
+  // Load saved theme or system preference
+  const savedTheme = localStorage.getItem(storageKey);
+  if (savedTheme) {
+    applyTheme(savedTheme);
+  } else {
+    applyTheme(systemPrefersDark.matches ? 'dark' : 'light');
+  }
+
+  // Listen for system theme changes (only if user hasn’t manually set one)
+  systemPrefersDark.addEventListener('change', (e) => {
+    if (!localStorage.getItem(storageKey)) {
+      applyTheme(e.matches ? 'dark' : 'light');
+    }
+  });
+
+  // Toggle manually
+  if (toggleButton) {
+    toggleButton.addEventListener('click', () => {
+      const current = root.getAttribute('data-color-scheme') === 'dark' ? 'light' : 'dark';
+      applyTheme(current);
+    });
+  }
+})();
 </script>
 
 </body>
