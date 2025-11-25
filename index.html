@@ -2117,7 +2117,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
       // Apply rotation to both icons (only visible one will animate)
       sunIcon.style.transform = `rotate(${rotation}deg)`;
-      moonIcon.style.transform = `rotate(${rotation}deg)`;
+      moonIcon.style.transform = `rotate(${rotation + 180}deg)`;
 
       // Swap visibility
       if (showingSun) {
