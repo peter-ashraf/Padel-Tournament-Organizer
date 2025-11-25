@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Enhanced Padel Tournament Organizer - Progressive Web App with Fixed Icons">
     <title>Padel Tournament Organizer</title>
-    
+
+	<!-- Font Awesome CDN -->
+ 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	
     <!-- Fixed Icons for PWA -->
     <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjgiIGhlaWdodD0iMTI4IiB2aWV3Qm94PSIwIDAgMTI4IDEyOCI+PGNpcmNsZSBjeD0iNjQiIGN5PSI2NCIgcj0iNjQiIGZpbGw9IiMyZWNjNzEiLz48cGF0aCBkPSJNNDAgNDBMODggNDBBOCA4IDAgMCAwIDk2IDQ4TDk2IDgwQTggOCAwIDAgMCA4OCA4OEw0MCA4OEE4IDggMCAwIDAgMzIgODBMMzIgNDhBOCA4IDAgMCAwIDQwIDQwWiIgZmlsbD0id2hpdGUiLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjU2IiByPSIzIiBmaWxsPSIjMmVjYzcxIi8+PGNpcmNsZSBjeD0iNzgiIGN5PSI1NiIgcj0iMyIgZmlsbD0iIzJlY2M3MSIvPjxjaXJjbGUgY3g9IjY0IiBjeD0iNzIiIHI9IjMiIGZpbGw9IiNmMzljMTIiLz48L3N2Zz4=">
     
@@ -501,6 +504,22 @@
             border-bottom: 1px solid var(--border-color);
         }
 
+		.collapsible-header {
+	    display: flex;
+	    align-items: center;
+	    justify-content: start;
+	    gap: 5px;
+		}
+		
+		.collapsible-toggle-icon {
+		    display: block;
+		    transition: transform 0.3s ease;
+		}
+	
+		.collapsible-toggle[aria-expanded="true"] .collapsible-toggle-icon {
+	  	    transform: rotate(90deg);
+		}
+
         .btn-close {
             background: none;
             border: none;
@@ -772,7 +791,7 @@
             <!-- History of the Day (inserted) -->
             <section id="history-of-day-wrapper" class="collapsible-section" aria-hidden="true" style="display:block;">
               <button id="toggle-history-of-day" class="collapsible-toggle" aria-expanded="false" style="all:unset;cursor:pointer;">
-                <div class="collapsible-header">History of the Day ⯈</div>
+                <div class="collapsible-header">History of the Day <i class="fa-solid fa-caret-right collapsible-toggle-icon"></i></div>
               </button>
               <div id="history-of-day" class="collapsible-content" style="display:none; margin-top:8px;">
                 <div id="history-empty" style="opacity:0.7;font-size:0.9em;">No history yet. Play a round to populate the history.</div>
